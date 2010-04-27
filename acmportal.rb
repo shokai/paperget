@@ -26,7 +26,7 @@ pdfs = pdfs.uniq.delete_if{|url|
 
 pdfs.each{|url|
   puts url
-  #puts `wget "#{url}"`
+  puts `wget "#{url}"`
 }
 
 Dir.glob("*\?*").each{|name|
