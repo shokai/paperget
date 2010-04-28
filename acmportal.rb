@@ -28,7 +28,7 @@ pdfs.each{|url|
   puts url
   puts `wget "#{url}"`
   Dir.glob("*\?*").each{|name|
-    `mv "#{name}" #{name.split(/\?/).first}`
+    `mv "#{name}" #{name.split(/*\\?*/).first}`
   }
  }
 
