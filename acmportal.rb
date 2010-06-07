@@ -17,7 +17,11 @@ doc = Hpricot(open(uri).read.toutf8)
 links = doc/:a
 pdfs = Array.new
 for i in 0...links.length
-  pdfs << "http://portal.acm.org/"+links[i][:href].to_s
+  href = links[i][:href].to_s
+  if !(href =~ /^http/)
+    href = "http://portal.acm.org/"+href
+  end
+  pdfs << href
 end
 
 pdfs = pdfs.uniq.delete_if{|url|
@@ -28,7 +32,8 @@ pdfs.each{|url|
   puts url
   puts `wget "#{url}"`
   Dir.glob("*\?*").each{|name|
-    `mv "#{name}" #{name.split(/*\\?*/).first}`
+    to = name.split(/\?/).first
+    File.rename(name, to)
   }
  }
 
